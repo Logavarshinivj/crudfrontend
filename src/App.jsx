@@ -43,7 +43,7 @@ export default function App(){
   
   //   ])
     useEffect(()=>{
-      fetch("https://crud-backend-6laa.vercel.app/getallusers")
+      fetch("https://crud-be-ebon.vercel.app/getallusers")
     .then((res)=>res.json())
     .then((data)=>setUser(data))
     },[])
@@ -262,7 +262,7 @@ const navigate=useNavigate()
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
-       .post('https://crud-backend-6laa.vercel.app/getallusers', newuser)
+       .post('https://crud-be-ebon.vercel.app/getallusers', newuser)
        .then((res) => {
           setName((name) => [res.data, ...name]);
           setAge((age) => [res.data, ...age]);
@@ -313,7 +313,7 @@ function Sample({user,id}){
 
   const deleteUser=async(id)=>{
     console.warn(id)
-  let result= await fetch (`https://crud-backend-6laa.vercel.app/${id}`,{
+  let result= await fetch (`https://crud-be-ebon.vercel.app/${id}`,{
     method: 'DELETE',
   });
   result=await result.json();
@@ -432,7 +432,7 @@ function UpdateUser(){
   },[])
 
   const getUser=async()=>{
-    var result=await fetch(`https://crud-backend-6laa.vercel.app/getuser/${id}`)
+    var result=await fetch(`https://crud-be-ebon.vercel.app/getuser/${id}`)
     result= await result.json()
     console.log(result.name)
     setName(result.name)
@@ -447,7 +447,7 @@ function UpdateUser(){
   }
   
 const updateProduct=async()=>{
-  let result=await fetch(`https://crud-backend-6laa.vercel.app/update-user/${id}`,
+  let result=await fetch(`https://crud-be-ebon.vercel.app/update-user/${id}`,
   {
     method: 'PUT',
     body: JSON.stringify({ name, age,gender,img,tmark,emark,smark,mmark,somark}),
@@ -499,7 +499,7 @@ function SignUp(){
     }
   },[])
  const collectData=async()=>{
-  let result=await fetch("https://crud-backend-6laa.vercel.app/register",
+  let result=await fetch("https://crud-be-ebon.vercel.app/register",
   {
     method: 'POST',
     body: JSON.stringify({email,password}),
@@ -534,7 +534,7 @@ function Login(){
     }
   },[])
   const handleLogin=async()=>{
-    let result=await fetch("https://crud-backend-6laa.vercel.app/login",
+    let result=await fetch("https://crud-be-ebon.vercel.app/login",
     {
       
       method: 'POST',
