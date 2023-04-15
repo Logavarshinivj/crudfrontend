@@ -451,7 +451,8 @@ const updateProduct=async()=>{
   {
     method: 'PUT',
     body: JSON.stringify({ name, age,gender,img,tmark,emark,smark,mmark,somark}),
-    headers: { 'Content-Type': 'application/json'}
+    headers: { 'Content-Type': 'application/json',
+    }
   })
 
   result= await result.json()
@@ -502,7 +503,7 @@ function SignUp(){
   {
     method: 'POST',
     body: JSON.stringify({email,password}),
-    headers: { 'Content-Type': 'application/json'}
+    headers: { 'Content-Type': 'application/json',}
   })
 
   result= await result.json()
@@ -538,7 +539,11 @@ function Login(){
       
       method: 'POST',
     body: JSON.stringify({email,password}),
-    headers: { 'Content-Type': 'application/json'}
+    headers: { 'Content-Type': 'application/json',
+    
+
+  },
+    
     })
     result= await result.json()
     if(result.email){
