@@ -488,29 +488,78 @@ const updateProduct=async()=>{
 
 
 function SignUp(){
- 
   const [email,setEmail]=useState()
   const [password,setPassword]=useState()
+  const [emailError, setEmailError] = useState('')
+  const [passwordError, setPasswordError] = useState('')
   const navigate=useNavigate()
-  useEffect(()=>{
-    const auth=localStorage.getItem('user')
-    if(auth){
-      Navigate("/")
-    }
-  },[])
- const collectData=async()=>{
+//   useEffect(()=>{
+//     const auth=localStorage.getItem('user')
+//     if(auth){
+//       Navigate("/")
+//     }
+//   },[])
+//  const collectData=async()=>{
+//   let result=await fetch("https://crud-be-ebon.vercel.app/register",
+//   {
+//     method: 'POST',
+//     body: JSON.stringify({email,password}),
+//     headers: { 'Content-Type': 'application/json',}
+//   })
+
+//   result= await result.json()
+//   if(result){
+//     localStorage.setItem("user", JSON.stringify(result))
+//     navigate("/")
+//   }
+// }
+
+const collectData=async()=>{
+  setEmailError('')
+  setPasswordError('')
+  if (!email) {
+    setEmailError('Email is required*')
+    return
+  }
+  if (!password) {
+    setPasswordError('Password is required*')
+    return
+  }
+  if (!/\S+@\S+\.\S+/.test(email)) {
+    setEmailError('Please enter a valid email address*')
+    return
+  }
+  if (password.length < 6) {
+    setPasswordError('Password must be at least 6 characters long*')
+    return
+  }
   let result=await fetch("https://crud-be-ebon.vercel.app/register",
   {
     method: 'POST',
     body: JSON.stringify({email,password}),
-    headers: { 'Content-Type': 'application/json',}
+    headers: { 'Content-Type': 'application/json'}
   })
 
   result= await result.json()
-  if(result){
-    localStorage.setItem("user", JSON.stringify(result))
-    navigate("/")
+  if(result.message === 'User already exists'){
+    alert("User already exists")
+}
+  else if(result){
+   
+      localStorage.setItem("user", JSON.stringify(result))
+      navigate("/login")
+      alert("Registration Successful")
+    
+        
+    }
+  else{
+      alert("already registered")
   }
+  
+  // if(result){
+  //   localStorage.setItem("user", JSON.stringify(result))
+  //   navigate("/")
+  // }
 }
 
   return(
@@ -523,38 +572,83 @@ function SignUp(){
   )
 }
 
-function Login(){
-  const [email,setEmail]=useState()
-  const [password,setPassword]=useState()
+// function Login(){
+//   const [email,setEmail]=useState()
+//   const [password,setPassword]=useState()
+//   const navigate=useNavigate()
+//   useEffect(()=>{
+//     const auth=localStorage.getItem('user')
+//     if(auth){
+//       Navigate("/")
+//     }
+//   },[])
+//   const handleLogin=async()=>{
+//     let result=await fetch("https://crud-be-ebon.vercel.app/login",
+//     {
+      
+//       method: 'POST',
+//     body: JSON.stringify({email,password}),
+//     headers: { 'Content-Type': 'application/json',
+    
+
+//   },
+    
+//     })
+//     result= await result.json()
+//     if(result.email){
+//       localStorage.setItem("user", JSON.stringify(result))
+//       navigate("/")
+//     }
+//     else{
+//       alert("Invalid username or password")
+//     }
+
+    
+//   }
+function Login() {
+  const [email,setEmail]=useState('')
+  const [password,setPassword]=useState('')
+  const [emailError, setEmailError] = useState('')
+  const [passwordError, setPasswordError] = useState('')
   const navigate=useNavigate()
-  useEffect(()=>{
-    const auth=localStorage.getItem('user')
-    if(auth){
-      Navigate("/")
-    }
-  },[])
+  // useEffect(()=>{
+  //   const auth=localStorage.getItem('user')
+  //   if(auth){
+  //     navigate("/")
+  //   }
+  // },[])
   const handleLogin=async()=>{
+    setEmailError('')
+    setPasswordError('')
+    if (!email) {
+      setEmailError('Email is required*')
+      return
+    }
+    if (!password) {
+      setPasswordError('Password is required*')
+      return
+    }
+    if (!/\S+@\S+\.\S+/.test(email)) {
+      setEmailError('Please enter a valid email address*')
+      return
+    }
+    
     let result=await fetch("https://crud-be-ebon.vercel.app/login",
     {
       
       method: 'POST',
     body: JSON.stringify({email,password}),
-    headers: { 'Content-Type': 'application/json',
-    
-
-  },
-    
+    headers: { 'Content-Type': 'application/json'}
     })
     result= await result.json()
     if(result.email){
-      localStorage.setItem("user", JSON.stringify(result))
-      navigate("/")
-    }
-    else{
-      alert("Invalid username or password")
-    }
-
-    
+        localStorage.setItem("user", JSON.stringify(result))
+        navigate("/")
+      }
+      else{
+        alert("Invalid username or password")
+      }
+   
   }
   return(
     <div className='signin-form'>
