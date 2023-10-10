@@ -30,7 +30,7 @@ export default function App(){
   const auth=localStorage.getItem('user')
   const logout=()=>{
     localStorage.clear()
-    navigate("/register")
+    navigate("/login")
   }
   // const [user,setUser]=useState(
   //   [
@@ -62,6 +62,7 @@ export default function App(){
     // console.log(user[1])
   return(
     <div className="App">
+      <div className="AppGlass">
        {/* <AppBar position="static" color="secondary">
         <Toolbar>
          
@@ -75,23 +76,23 @@ export default function App(){
           }
         </Toolbar>
       </AppBar> */}
-      {auth?
+      {auth?  (
       <AppBar position="static" color="secondary">
         <Toolbar>
          
-          <Button onClick={()=>navigate("/")} color="inherit">Home</Button>
+          <Button onClick={()=>navigate("/",{replace: true})} color="inherit">Home</Button>
           <Button onClick={()=>navigate("/user-details")} color="inherit">User Details</Button>
           <Button onClick={()=>navigate("/add-user")} color="inherit">Add User</Button>
           <Button onClick={logout}  color="inherit">Logout</Button>
           </Toolbar>
-         </AppBar>:
-          <AppBar position="static" color="secondary">
+         </AppBar>):
+          (<AppBar position="static" color="secondary">
           <Toolbar>
-          <Button onClick={()=>navigate("/register")} color="inherit">Sign Up</Button>
-          <Button onClick={()=>navigate("/login")} color="inherit">LogIN</Button>
+          <Button onClick={()=>navigate("/register",{replace: true})} color="inherit">Sign Up</Button>
+          <Button onClick={()=>navigate("/login",{replace: true})} color="inherit">LogIN</Button>
           
         </Toolbar>
-      </AppBar>
+      </AppBar>)
 }
 
 
@@ -119,6 +120,7 @@ export default function App(){
         {/* <Route path="/update" component={UpdatePage}/> */}
 
       </Routes>
+    </div>
     </div>
     
   )
@@ -533,7 +535,7 @@ const collectData=async()=>{
     setPasswordError('Password must be at least 6 characters long*')
     return
   }
-  let result=await fetch("https://crud-be-ebon.vercel.app/register",
+  let result=await fetch("http://localhost:4000/newregister",
   {
     method: 'POST',
     body: JSON.stringify({email,password}),
@@ -566,7 +568,9 @@ const collectData=async()=>{
     <div className='signup-form'>
       <h1>Register</h1>
       <TextField  id="standard-basic" label="Email Address" variant="standard"color="secondary" type="email" placeholder="Enter your email address" value={email} onChange={(event)=>setEmail(event.target.value)}/>
+      {emailError && <p className="error" style={{ color: "red" }}>{emailError}</p>}
       <TextField id="standard-basic" label="Password" variant="standard"color="secondary" type="password"  placeholder="Set your password" value={password} onChange={(event)=>setPassword(event.target.value)}/>
+      {passwordError && <p className="error" style={{ color: "red" }} >{passwordError}</p>}
       <Button  variant="contained" color="secondary" type="button" onClick={collectData}>Sign Up</Button>  
     </div>
   )
@@ -633,7 +637,7 @@ function Login() {
       return
     }
     
-    let result=await fetch("https://crud-be-ebon.vercel.app/login",
+    let result=await fetch("http://localhost:4000/newlogin",
     {
       
       method: 'POST',
@@ -654,7 +658,9 @@ function Login() {
     <div className='signin-form'>
       <h1>SIGN IN</h1>
       <TextField  id="standard-basic" label="Email Address" variant="standard"color="secondary" type="email" placeholder="Enter your email address" value={email} onChange={(event)=>setEmail(event.target.value)}/>
+      {emailError && <p className="error" style={{ color: "red" }}>{emailError}</p>}
       <TextField id="standard-basic" label="Password" variant="standard"color="secondary" type="password"  placeholder="Set your password" value={password} onChange={(event)=>setPassword(event.target.value)}/>
+      {passwordError && <p className="error" style={{ color: "red" }} >{passwordError}</p>}
       <Button  variant="contained" color="secondary" type="button" onClick={handleLogin} >LOGIN</Button>  
     </div>
   )
