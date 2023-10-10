@@ -535,7 +535,7 @@ const collectData=async()=>{
     setPasswordError('Password must be at least 6 characters long*')
     return
   }
-  let result=await fetch("http://localhost:4000/newregister",
+  let result=await fetch("https://crud-be-ebon.vercel.app/newregister",
   {
     method: 'POST',
     body: JSON.stringify({email,password}),
@@ -637,7 +637,7 @@ function Login() {
       return
     }
     
-    let result=await fetch("http://localhost:4000/newlogin",
+    let result=await fetch("https://crud-be-ebon.vercel.app/newlogin",
     {
       
       method: 'POST',
